@@ -1,0 +1,2 @@
+gcc -o server main.cpp -I -L -ludt -lstdc++ -lpthread
+

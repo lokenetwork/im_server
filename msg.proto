@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package Msg;
+
+//消息类型。
+message MsgType {
+  required int32 value = 1;
+}
+enum Type{
+  TYPE_LOGIN_Q = 0x0001; //登录请求
+  TYPE_LOGIN_R = 0x0002; //登录结果
+  TYPE_VOICE = 0x0003; //语音通话
+  TYPE_PICTURE = 0x0004; //图片
+  TYPE_TEXT = 0x0005; //文本消息
+  TYPE_CONTACT_Q = 0x0006; //请求拉取联系人。可能用不着。登录之后直接推
+  TYPE_CONTACT_R = 0x0007; //联系人结果
+}
+
+//登录
+message LoginMsgReq{
+  required int32 msg_type = 1;
+  required string name = 2;
+  required string password = 3;
+}
+message LoginMsgRes{
+  required int32 msg_type = 1;
+  required int32 code = 2;
+  required int32 user_id = 3;
+}
+enum LoginRes{
+  CODE_SUCCESS = 0x0001;
+  CODE_PASSWORD_WRONG = 0x0002;
+  CODE_FAIL_OTHER = 0x0003;
+}
+
+//联系人
+message User {
+  required int32 id = 1;
+  required string name = 2;
+  required string last_msg = 3;
+}
+message ContactMsgRes{
+  required int32 msg_type = 1;
+  repeated User user = 2;
+  required bool is_end = 3; //是否到最后一页
+}
+
+message TextMsg{
+  required int32 msg_type = 1;
+  required int32 from_user = 2;
+  required int32 to_user = 3;
+  required string data = 4;
+}
